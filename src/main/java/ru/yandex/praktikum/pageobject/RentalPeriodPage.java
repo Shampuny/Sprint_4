@@ -16,32 +16,37 @@ public class RentalPeriodPage {
     private final By yesConfirmationButton = By.xpath(".//div[starts-with(@class,'Order_Buttons')]/button[text()='Да']");
     private final By confirmationWindow = By.xpath(".//div[starts-with(@class,'Order_ModalHeader')]");
     private final static String successfulOrder = "Заказ оформлен";
+    private final By DeliveryInput = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
+    private final By DeliveryDate = By.xpath(".//div[text()='21']");
+    private final By rentalPeriodDropDownField = By.xpath(".//div[@class='Dropdown-root']");
+    private final By rentalPeriodDropdownSelectField = By.xpath(".//div[(@class='Dropdown-option' and text()='сутки')]");
+    private final By scooterColorCheckBox = By.xpath(".//label[@for='black']");
+    private final By commentField = By.xpath(".//input[@placeholder='Комментарий для курьера']");
 
     public RentalPeriodPage selectDeliveryDate(){
-        driver.findElement(By.xpath(".//input[@placeholder='* Когда привезти самокат']")).sendKeys("21.06.2023");
-        driver.findElement(By.xpath(".//div[text()='21']")).click();
+        driver.findElement(DeliveryInput).sendKeys("21.06.2023");
+        driver.findElement(DeliveryDate).click();
         return this;
     }
     public RentalPeriodPage selectRentalPeriod(){
-        driver.findElement(By.xpath(".//div[@class='Dropdown-root']")).click();
-        driver.findElement(By.xpath(".//div[(@class='Dropdown-option' and text()='сутки')]")).click();
+        driver.findElement(rentalPeriodDropDownField).click();
+        driver.findElement(rentalPeriodDropdownSelectField).click();
         return this;
     }
     public RentalPeriodPage selectScooterColor(){
-        driver.findElement(By.xpath(".//label[@for='black']")).click();
+        driver.findElement(scooterColorCheckBox).click();
         return this;
     }
     public RentalPeriodPage writeComment(){
-        driver.findElement(By.xpath(".//input[@placeholder='Комментарий для курьера']")).sendKeys("Здарова, бро");
+        driver.findElement(commentField).sendKeys("Здарова, бро");
         return this;
     }
     public RentalPeriodPage clickOnOrderConfirmationButton(){
         driver.findElement(orderConfirmationButton).click();
         return this;
     }
-    public RentalPeriodPage clickOnYesConfirmationButton(){
+    public void clickOnYesConfirmationButton(){
         driver.findElement(yesConfirmationButton).click();
-        return this;
     }
 
     public void checkIsDisplayedConfirmationWindow(){
@@ -49,14 +54,14 @@ public class RentalPeriodPage {
         MatcherAssert.assertThat(isDisplayedConfirm, containsString(successfulOrder));
     }
 
-    public void successfulOrderCreation(){
+    public RentalPeriodPage successfulOrderCreate(){
         selectDeliveryDate()
                 .selectRentalPeriod()
                 .selectScooterColor()
                 .writeComment()
                 .clickOnOrderConfirmationButton()
-                .clickOnYesConfirmationButton()
-                .checkIsDisplayedConfirmationWindow();
+                .clickOnYesConfirmationButton();
+        return this;
     }
 
 }

@@ -1,9 +1,12 @@
 package ru.yandex.praktikum.pageobject;
 
+import org.hamcrest.MatcherAssert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertTrue;
 
 
@@ -25,9 +28,10 @@ public class MainPage {
         element.click();
         return this;
     }
-    public void checkIsDisplayedDropDownText(String dropDownText){
-        var isDisplayed = driver.findElement(By.xpath(".//div[@class='accordion__item']" + dropDownText + "//div[@class='accordion__panel']")).isDisplayed();
-        assertTrue(isDisplayed);
+    public void checkDropDownText(String dropDownFieldWithText, String expectedText){
+        var dropDownText = driver.findElement(By.xpath(".//div[@class='accordion__item']" + dropDownFieldWithText + "//div[@class='accordion__panel']"));
+        assertTrue(dropDownText.isDisplayed());
+        MatcherAssert.assertThat(dropDownText.getText(), containsString(expectedText));
     }
     public void clickOnOrderButton(){
         driver.findElement(orderButton).click();

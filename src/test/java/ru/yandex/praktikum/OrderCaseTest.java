@@ -35,9 +35,10 @@ public class OrderCaseTest extends BaseTest {
         new MainPage(driver)
                 .clickOnOrderButton();
         new OrderDataPage(driver)
-                .enteringOrderData(name, surname, address, metroValue, phoneNumber);
+                .enterOrderData(name, surname, address, metroValue, phoneNumber);
         new RentalPeriodPage(driver)
-                .successfulOrderCreation();
+                .successfulOrderCreate()
+                .checkIsDisplayedConfirmationWindow();
 
     }
 }
